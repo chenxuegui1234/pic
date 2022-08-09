@@ -1,0 +1,285 @@
+<!DOCTYPE html><html>
+<head>
+    <title>Login - BIGO 统一登录中心</title>
+    <meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="stylesheet" href="/cas/webjars/font-awesome/5.0.13/web-fonts-with-css/css/fontawesome-all.min.css"/><link type="text/css" rel="stylesheet" href="/cas/webjars/lato/0.3.0/css/lato.min.css"/><link rel="icon" href="https://privileges.bigo.sg/static/img/bigo.png"/><script type="text/javascript" src="/cas/webjars/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src='//static.bigo.sg/static/lib/polyfill.min.js'></script> 
+    <script type="text/javascript" src="//static.bigo.sg/static/loader.sdk/0.4.3/index.js"></script>
+    <script type="text/javascript">
+        var os = (function() {
+                var ua = navigator.userAgent,
+                isWindowsPhone = /(?:Windows Phone)/.test(ua),
+                isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone, 
+                isAndroid = /(?:Android)/.test(ua), 
+                isFireFox = /(?:Firefox)/.test(ua), 
+                isChrome = /(?:Chrome|CriOS)/.test(ua),
+                isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+                isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+                isPc = !isPhone && !isAndroid && !isSymbian;
+                return {
+                isTablet: isTablet,
+                isPhone: isPhone,
+                isAndroid : isAndroid,
+                isPc : isPc
+                };
+        })();
+
+        function setSize() {
+                var fontSize = window.innerWidth / 960 * 1000;
+                if (fontSize < 1200) {
+                        fontSize = 1200;
+                }
+                document.getElementsByTagName('html')[0].style.cssText = `width:100%; height:${window.innerHeight}px; font-Size: ${fontSize}px`;
+        }
+        setSize();
+        window.onresize = setSize;
+    </script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/></head>
+<body>
+<script type="text/javascript">
+    loadcss = function(data) {
+        if (data.success && data.code == 200) {
+             var version = data.data.version;
+             var link = document.createElement('link');
+             link.rel = "stylesheet";
+             link.href = "//static.bigo.sg/static/resource/" + version + "/cas/css/main.css";
+             link.onload = function() {
+                 setSize();
+                 var d = document.querySelector('.wrapper');
+                 d.style.cssText = "top:" + d.offsetTop + "px;position: absolute;visibility: visible;";
+             }
+             document.head.appendChild(link);
+        }
+    }
+
+    var js = document.createElement('script');
+    js.type = 'text/javascript';
+    js.src = '//static.bigo.sg/api/StaticVersion/getlatestversion?pname=resource&callback=loadcss';
+    document.body.appendChild(js);
+</script>
+<div class="wrapper">
+    <div class="logo">
+        <!--此处插入LOGO图片--><img src="https://privileges.bigo.sg/static/img/Logo.svg" class="logoimg"></div>
+
+    <div id="content">
+        <div>
+	<div class="login help" id="helpcenter">
+	    <div class="clearfix">已有账号, <a href="javascript:callback%28%29">返回登录</a></div>
+	    <a class="title" href="javascript:">帮助中心</a>
+	    <div class="content">hi, 您正在使用 BIGO 统一登录中心！<br />您可以使用邮箱用户名（前缀，不包含域）进行登录；<br />第一次使用，可使用海度账号（去掉dw_）及密码登录 <br />请 登录 bigo 统一认证中心进行登录认证！</div>
+	    <div class="content answer">如有疑问请联系:</div>
+	    <div class="content" style="font-size: 14px; padding-top: 0.005rem; margin-top: 0px;">
+	    		BIGO 吴康 电话/企业微信:15210872621<br/>
+	    		BIGO 蓝昭宝 电话/企业微信:15994830616
+	    </div>
+	    
+	</div>
+    <div class="login" id="login">
+        <div class="clearfix qr_icon">
+            <span class="qr" id="qr_icon">
+                <!-- 此处插入二维码图片 --><img src="https://privileges.bigo.sg/static/img/QR.svg" class="qrimg"></span>
+        </div>
+        <div class="inner">
+            <h1 class="form-title" align="center">BIGO 统一登录中心</h1>
+            <div class="form clearfix">
+                <form method="post" id="fm1" action="login">
+                    <div class="errorMessage">
+                        </div>
+                    <div class="form-line">
+                        <span class="icon">
+                            <!-- 此处插入账号图标 --><img src="https://privileges.bigo.sg/static/img/account.svg" class="iconimg"></span>
+                        <input id="username" name="username" type="text" accesskey="n" placeholder='username' autofocus value="" /></div>
+                    <div class="form-line">
+                        <span class="icon">
+                            <!-- 此处插入密码图标 --><img src="https://privileges.bigo.sg/static/img/password.svg" class="iconimg"></span>
+                        <input id="password" name="password" type="password" accesskey="p" placeholder='password' value="" /></div>
+                    <input type="hidden" name="execution" value="c9ab2c41-6c18-4266-a374-4f2b8605e6b5_ZXlKaGJHY2lPaUpJVXpVeE1pSjkuSVRwVk0vN0NZTHRHclo3MHNqTWlZZWVkNVFLZ1JEQXJZNk9JTW5BRi9GSDBMWU00d0hIK3h1ZU5kL1p4ZUtNeElEQVU4N2YvUFI3NVdyTGNZV3ZaWHFyNk8zWDUxanFUZ2xobDZuTG1oV0hodVk5dEdwZ3ZvWHhIa0Z6ZGtJaVErWWFzdGYyQW0yTktMcTh6SXNaQUoyb2FaQisyamUwbWVTd2JiMU8rU2JNWEJmTDJmR1FoWElsVGZ1bHVQQU5DNTdseXhqZG55NWhQNk42emhKWUY1T0lzMGZPQ3ZIQTJjR2tnRzFuNHl1YnVXWjhCL3ExNUlna0thKzNrRFRORUgzb0JFYUF4emQwazRzeWlXdTBjYmdNU1hibytIbXVQTm1LQ1RWeFo2SHNua1pXNE53UlZoeU5ITkE0VVdHM1EwaENkbFNRMXd1eU8vUkh5ZDVSb2Uwckw0K25aYzBQU1hYN2M2TC9DcStaL2dPc0hjSEs0Z0R6b09ya0hVZGtKVHRlTjNwN2xqMjZGK3hTamhZd0ZyclZYZzlnd2txdXhGcTEyVUlTa0I4TVVnUzJRWUpGbHdDNGhPdEpDVnU5M3lKRDd1UkpCL0pGV2JmRytPR2kzVFJwUjMyRE81aTF0RVJFa0kyQmc5ODZwZWYwcGUra2NJbjFseDBnREJQeG5paWk2Qi9EYUtXMjRKVG9tc2YydkFKSWwvWXNMa3JQUUVEVlhZeWc1M3E0SVhaUEkxTWptVVNhd3lERkk3ZktDbTkwa3p5bjl2NjBYWjJzWmJCVVpMd3dMTjZuNGJMMlhqVklHK0VFZHpONURhckVnc1c0a0dZcW5NVU0vR1ZJRStZNFoycVpXT21CK1JNNDQ0MUt5ZWd0QkFiWXQ1aWdyWXJtaVFCMU5xbUpra2Z1Z0Zodm5LM2trWnBMT0wxRlFEMVZQU2daaVdJYXgvYy9oZlBnZjdzVkdEeDEwczM2YUxJeC9zUXZueS8vcnV0SEd3QkZ2NjBpRXJiSkwxVHZmc2JDWU0zNWFVc0xER0xoZllRRDJ4c0V4aU1EMmZNRjh6aFIwTHkwRm9MY0tYWVNRMys3T1AyK1g5WHQzaXIwaXdxK2NUQkY4QUJ3dnNOTm4yTG4vRTNVNDZZQWNYRHAxRmhKRTZCbXd2L3BWSUZsbUdUanFpY3JLMHI3c2txRzhXdzhwRmpBR2p0L1ExV0FIZFlhMGdZYWNsalF6WXUwQVRoTitYKzF6MWNMN0tvTERJZlBIbVpMMU5HOUlXeUE5MnNEQWNSKzJrc05ST0ZwTmJ4T0cyMXhFUXAvOFVzd3BEaXFNZUwvYUY3blY2eFR5ZWJQVi9udG5vTzFkUTJ1NDhWTFp2S1FtMytWeTBwZVNIL2ZJRFp6ZmNHTS9KY3ExRnJTbjVNbTJsQWcxNmxFaldNRlYwNjUxUCt1TVoycW1MODdIWThMeG5wTkFDb1NmZThxZUZUVnpYdEkvR20wdjlzOTh4d3RDaG5rUm5uMUJjYVVRRmJlcEhwMEJ1MWcyVFFlSURjWUpuTGwwS0JjUnJRNUd4YXFEM3l6cjhVSGlXZ0JMblRORXFJdk04aWk1T0laTnJXM3pGUm5nSHhkMWlWZ0EwS3c4b0NIQmxBYmtWeFdxSU9sd3orQW9GdUtza1BxaEI5WFBjY1kyaFBTSWZJN09zbDUzT2srSlJUR3hwd1pIUE5jQ1kvSEg4OFd3MGROTHdqMGJlbERpNFdaYXdXalZYV0JiUXRTT2xuZjluMGRoZ21tUUNQM0ZPdmlPWnpMTEdQZlp1UVB2TTAyRm5BdjZjRDdycis5bmhaZkM1MERpckhRQitaNXBSQ3EvZkEweUo4b2dKQUhrMm5va3creWdWSDlGQ25QT2xDYnI2Myt5blBlMzNSY292SVJTVXhEcXExdXJOV3g2YW1NcHlyT0FPakRSMUs3elUyM2trVGNTeEI5QUVRQkFqL3QzcllZTHMrUmQzckdQemp1VlN6Q09la0loZU5td2VwdVZTeFo2RFlDd0xHdFJZeWtmUjFmMGJCQzhFa0NKaHk5Nm91UytPdGF5d08xTHZ5a2UyT2UvMTJFQkNEQmdwb253N1ZGTmdleFNhVy9wN3E0MG5VMzVVNlpnOElvUVd1NlJIVEsvVFBCL1lrdXdpNHhIWHE5TkNyT0FlMGo3aXRIdXd3bk5zajI2Q202eGlIQ0QyVER4RUtvTm5wMW14QXpjS1pWY1I3YTV0NVZjUVM2aHFHNlc3ZU9FakZjeS85NlV0RmxPejd2dXJ5QVZxeVI2MlF0NFhyVEtGRFhEckVyc016Z1pmN2JpNHQxeTRFN0ZZKzNpSGlXRzJZMUxiR2FMamlOeWFRZDBmN2gwbGxtV0VCcm1Rck1jaTFVOEdmbHUzaVlDcEFvZEFHODY2N0FZMVUwUjBXaW51dW55ZGc3UWxqdVI1cW80Wk1xMWVQU0N6SXVPQlBYamU5b1BtbTZic3IrVk5WdGtqYTdhUnFVTmdmbHE4QUphR2NrMG4xL2x0KzgrTjNLZ1RxSlFJc2VMKzdrZ0pudkZiYU91RDgvcWloMU1FSzU2MFNUOHc5dkxYTFV2NDRQQ3pZczZzOUpCcmFsV0JXN3JCWlExT2FVRGlQWmZMUmQxaVhGc1ZlNG5KN3FIV1NqWDJINU84bVVVVTliWndKVDVzSUIvUHc3ZTNPTlRGMVBvaTdKVm5JNHJGVWlBcllqaTJaSFRsbk4rVENDQmRiVTlPSUdhd0FlZWNPeVMvcVl0TGVrQmxDcFYyN25NaVNDUjBGaXYreU5WVWRjeWtTYnVyQmJiZlg2WjdGUExUSlFTVi9SRVdaajI0VDQzQ0Z6NS9DVFNpRi96Q2p6SWVVcTViS254RG52MTM3NE52d3I5dFpXL1NEeHdkR2JJWVNtcUJ1Q01BS013eEU3R1l2aStjemkwdG00b1R0VnJJWmhoSUxRSmQxTHdob2xjR0Q3eTduQUR2RmhkRDVFSHVwLy8yMGwvVXpHQ1ZkVEJFWEdXMmcyckdKTm9QQktCN0F2RFRpL1FtR20wWU5qUGV5V1NKWGhFWUJHZFRMMEp2NEJFejhMZi9HQ01tTzZFODY0Q0FMelRYbVNiWFFsVUtLV1lkOGZqT1QyUlVPbXhVWHV1c0s1bzVwT3RpalFPclF2Z0JwMWNqeTNBS3VDb2JCUFZUZnBjQXVLTm5BQkVUZ0JuYVJ6cjQxL05Wc1E5RzJDTlJQZE8wWUhodXVNUkZIUDNMbm5obzJSdTRBZVhaYk1ZbmI1VUozZ2xtbXVWMCtmRjBPcGxWdGl1VGptK3JVd2l2aU92RjlWdmpyT3djYnpabUlsQlM4UmdGNW9LZEFiQXRrWHJBc3ptdFc1N2MvS0dyaUJPQTRmTTkzRFJJVWtRMTdNTEpRL1YyMm9ENWdDMnA2MUUzcGxCODIzSk5CMzllYUtvY3YxbnFmTmx6Nkd2bkRvNXZtVjRuMXU4QU9GL0JDMjh2MlFyUHEraTEwZDdyQU9aSC83USt3QkFoWEJuYmp3a2VON2ZtNEtlSlJYSEtMblo1SEh1YTRlODZPWkI0d24wOG1xa1FYekNZaWpBblF0RmRkZFh6Uy8vejJQcENJMVU5RnUwTmJaSjIwN0Z4c000b0JwQWtaQjV6ZjJyblFUU09RZ0k1RzluS1AxdzkxV3ZMNldNWXdhV2VaNmRSLzZ3TjlKQXV5SXpkaW5YMEtLZjRKdGFnZCswV1hmWU15NSt5WnZZRGxabkpZVCs1YUtmZkJ3cFRxeG13dHJPR2lZR1lYM1hoRXZzRnlKZXI4TEVqdDgzenhhQlBNUG5IV01ZaGVkZGZXN2RMRW03ek9kdFlsWk0zREFuUm8vZzZKYzdwRDhiYjFvMzV1bGR3eHFRY0IrWG1kS2h1Y016KzJvaUx2eUZWL1FZYys4VGIxMllMRGxJU3hCWkJuUjJETi9raXVoa1M4QzJYYU5PTGJheTJ2ZEUxOVZGQWZrcDdWWXRvZnNValYvMnBleFJldWtpRmNVblRxN3BTM0pjTE55TkdqejcxckF0UTNLRXBWRnZaV2Z4WEUwd01vbFdDOWN5MFJ4U2FLZzBWYnZLb3d6OHZzODRka1BINi9HakJmTGFVQ1dTc0N1UmhuR0dQd2RQY0U1dng1OUp0bkl4ampZa3hRWnNPM0ZCRGorQ1d2ZXJDSGRPdEYxYzB1MzlWNkFGN2FwQmszNFFFVnozSjhkd3MrTXd1c3BRbDMxei9qcy96NWNEMUx2TitTUkhHZkRjUUdkRFNzOVhSSm5ZT3BBTWdtWDJNSGQ1VWNZaWl3amNMSkQzYUpibkVXY21LOWxhMXRsSGIydlE4WVdNN21XQ2hIWmI4VXpxZmoreThwSG01dUYxQ1lWRlduM1ljdjNYd05JTVN0UmFmK2tNdTZGNER6aXdmdlQzYVFFSWtsZk03NHNrYWwwekd6KzF3WkZMUVJHVzdiMjd3NUg1WHpDYVlHRGorOGRMalFFSUUyZ1p1eXByVjV3ZkZZREd0NWZrTVZpKzQyRkZmOStaZlB6Z2o3Slo4dU1uM21vNENycCttUW9xZEVtZjIvbytWb3k1T2VQOU0yT1FubTNHV1JsUXp2M2NvV1dZSVVUOVVFSCt2Uy9GYWVFdFNHY0x0ZDgyK05MUjJTdFNpaDNIc1Fodkt4bkJ4ZHYzOEUwT2x5SDZGaXN6OHdyenBiNXJSbXRiS201VzhJOUtRYmpBMDd2Vm5jZ3lieHdMUGJHQUl1NnpQOUxvckFPbVNKMEtvcjF3YkxNVldxdmlMS290ellaamM5aUc5T2kwdmIzWjRjRURYaGhYakRETVFFdEFyKzdUaWR1LzBPaEkyeUZ4SURyOUE0dFRFQ1p0c3V2bjl0MDhuZi95SjdoeVkzdlpHMHhGR2FMOHgwbUZHSnpEVU9aSUM1ZXhIMXhvbjFPb0ZEeTh2VmpVNmZlblhwRVNxQ2xPVTNJY29hQTF4NHBYM3lFeXAzcjVTNnFGWEE3akJwbnVOdHBGSmIyeUI1QmVsYWthVnJKREJjMjViV09ic3Qxd3UwZ0xlZGJhalFETXNXcTgrYUV1VXROYjM2YlRnSDNGK3AydkpFMjk2ZzVjY0xMbUpocUxLdmdldTFnSDN0cEtTRWltdTB2aFJUdkNRTHd0cGlxQUFwYjJXY2c1ZGw5d2dWanlvT0pvOVNxRUV6M3c3V0FXRzh1YXFlZk9rUnRmSDNVWTdUWGNEcGdpVkw3Zmd6a1IwbTg0TFZGSnVRR0dPK2VER0hGdlNMcWw2NFoxWHVVQmZIajRzb0RyVXdjPS54UVludEZSSVdka0tDODlhYlc1YnRrUTBxTV8wQVhTVWlrTTF5dldvbkw3ckxFVkh1VzdEa0VleWQzMkU0NkJBWGtGR1dKUEtBazdaOGhSR2htel84Zw=="/><input type="hidden" name="_eventId" value="submit"/><input type="hidden" name="geolocation"/><input type="checkbox" name="rememberMe" id="rememberMe" value="true" style="display:none"><div class="form-line">
+                    	<span class="icon"></span>
+                    	<input type="submit" name="submit" class="btn btn-submit btn-able" value="登录"></div>
+                </form>
+            </div>
+            <div class="operation clearfix">
+		        <span class="left"  onclick="toggleCheck()">
+                    <span class="checkbox">
+                        <img src="https://privileges.bigo.sg/static/img/check.svg" class="checkimg"></span><label>记住账号</label>
+                </span>
+                <span class="right operation_text">
+                    <a href="https://privileges.bigo.sg/#/users.resetpwd" target="_blank">忘记密码</a> | <a href="javascript:helpcenter()">帮助</a>
+                </span>
+            </div>
+        </div>
+        <div class="bigQR clearfix ">
+            <div class="QR">
+		<div id="qr_iframe"></div>
+                <div class="qr_mark" id = "qr_mark" style="display: none">
+            		<i class="anticon anticon-loading ant-spin-dot" style="font-size: 24px;"><svg viewBox="0 0 1024 1024" class="anticon-spin" data-icon="loading" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 0 0-94.3-139.9 437.71 437.71 0 0 0-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"></path></svg></i>
+                        <span id="mark_text" style="position: absolute;top: calc(50% + 20px); color: #1890ff; left: 0.018rem; width: 100%;"></span>
+            	</div>
+            </div>
+            <div class="goBind">
+                <a href="https://privileges.bigo.sg/#/users.bindwechat" target="_blank">前往绑定企业微信</a>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    let qr = document.getElementsByClassName('qr')[0];
+    qr.addEventListener('click', showBigQR);
+
+    let loging = "\u6B63\u5728\u767B\u5F55\u4E2D,\u8BF7\u7A0D\u540E...";
+    $( document ).ready(function() {
+        $("#fm1").submit(function () {
+             $(":submit").attr("disabled", true);
+             $(":submit").attr("value", loging);
+             return true;
+        });
+
+        let count = 3;
+        var timer = setInterval(function() {
+            document.dispatchEvent(new Event('click'));
+            if (!(--count)) {
+               clearInterval(timer);
+            }
+        }, 500);
+
+        if (navigator.appVersion.match(/MicroMessenger/i)) {
+            openmark(loging);
+            let loginBox = document.getElementsByClassName('inner')[0];
+            let bigQR = document.getElementsByClassName('bigQR')[0];
+            let smallQR = document.getElementsByClassName('qrimg')[0];
+            let qr_icon = document.getElementById('qr_icon');
+            loginBox.style.display = 'none';
+            bigQR.style.display = 'block';
+            smallQR.src='https://privileges.bigo.sg/static/img/PC.svg';
+            qr_icon.className="topc";
+            let search = window.location.search === "" ? "?client_name=WechatApp" : window.location.search + "&client_name=WechatApp";
+            let url = "/cas/clientredirect" + search;
+            window.location.href = url;
+        }
+    });
+
+    function openmark(text) {
+        var mark = document.getElementById('qr_mark');
+        var mark_text = document.getElementById('mark_text');
+        mark_text.innerHTML = text || '';
+        mark.style.display = "block";
+    }
+    
+    function closemark() {
+    	document.getElementById('qr_mark').style.display = "none";
+    }
+
+    function callback() {
+    	document.getElementById('helpcenter').style.display = "none";
+    	document.getElementById('login').style.display = "block";
+    }
+
+    function helpcenter() {
+    	document.getElementById('login').style.display = "none";
+    	document.getElementById('helpcenter').style.display = "block";
+    }
+
+    function showBigQR() {
+        let loginBox = document.getElementsByClassName('inner')[0];
+        let bigQR = document.getElementsByClassName('bigQR')[0];
+        let smallQR = document.getElementsByClassName('qrimg')[0];
+        let qr_icon = document.getElementById('qr_icon');
+        if (smallQR.src.endsWith('QR.svg')) {
+            loginBox.style.display = 'none';
+            bigQR.style.display = 'block';
+            smallQR.src='https://privileges.bigo.sg/static/img/PC.svg';
+            openmark();
+            qr_icon.className="topc";
+            let QR = document.getElementById('qr_iframe');
+            let search = window.location.search === "" ? "?client_name=WechatQR" : window.location.search + "&client_name=WechatQR";
+            let url = "/cas/clientredirect" + search;
+            QR.innerHTML = "<iframe src='"+url+"' frameborder='0' scrolling='no' height='260px'/>";
+            let iframe = QR.querySelector('iframe');
+            iframe.addEventListener('load', closemark);
+        } else {
+            let QR = document.getElementById('qr_iframe');
+            loginBox.style.display = 'block';
+            bigQR.style.display = 'none';
+            qr_icon.className="qr";
+            smallQR.src='https://privileges.bigo.sg/static/img/QR.svg';
+            QR.innerHTML = "";
+            closemark();
+        }
+    }
+
+    function toggleCheck() {
+        let checkimg = document.getElementsByClassName('checkimg')[0];
+        let isCheck = checkimg.src.endsWith('check.svg');
+        checkimg.src=`${isCheck ?'https://privileges.bigo.sg/static/img/checked.svg':'https://privileges.bigo.sg/static/img/check.svg'}`;
+        document.getElementById('rememberMe').checked = isCheck;
+    }
+</script>
+</div>
+    </div>
+</div>
+<footer class="footer" role="contentinfo">
+        <div class="container">
+           <!-- <span id="copyright" th:utext="#{copyright}"></span>
+            <span>Powered by
+                Apereo Central Authentication Service
+                <span th:text="${T(org.apereo.cas.util.CasVersion).getVersion()}"></span>
+                <span th:text="${T(org.apereo.cas.util.CasVersion).getDateTime()}"></span>
+            </span>--></div>
+    </footer>
+
+<script type="text/javascript" src="/cas/webjars/zxcvbn/4.3.0/zxcvbn.js"></script>
+<script type="text/javascript" src="/cas/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/cas/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js"></script>
+<script src="/cas/webjars/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+
+<script src="/cas/webjars/headjs/1.0.3/head.min.js"></script>
+<script src="/cas/webjars/store.js/1.3.17/store.min.js"></script>
+<script type="text/javascript" src="/cas/js/cas.js"></script>
+
+<script>
+head.ready(document, function () {
+    if (!window.jQuery) {
+    	var jqueryUrl = "\/cas\/webjars\/jquery\/3.3.1\/jquery.min.js"; 
+        head.load(jqueryUrl, loadjQueryUI);
+    } else {
+        notifyResourcesAreLoaded(resourceLoadedSuccessfully);
+    }
+});
+
+function loadjQueryUI() {
+	var jqueryUrl = "\/cas\/webjars\/jquery-ui\/1.12.1\/jquery-ui.min.js"; 
+	head.load(jqueryUrl, loadjQueryCookies);
+}
+
+function loadjQueryCookies() {
+	var jqueryUrl = "\/cas\/webjars\/jquery-cookie\/1.4.1-1\/jquery.cookie.js"; 
+	head.load(jqueryUrl, notifyResourcesAreLoaded(resourceLoadedSuccessfully));
+}
+
+function notifyResourcesAreLoaded(callback) {
+    if (typeof callback === "function") {
+        callback();
+    }
+}
+</script>
+
+<script>
+    /*<![CDATA[*/
+
+    var trackGeoLocation = false;
+
+    var googleAnalyticsTrackingId = null;
+
+    if (googleAnalyticsTrackingId != null && googleAnalyticsTrackingId != '') {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', googleAnalyticsTrackingId, 'auto');
+        ga('send', 'pageview');
+    }
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
